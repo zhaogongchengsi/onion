@@ -1,7 +1,7 @@
 {
   "name": "@zunh/onion",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0-beta.1",
   "packageManager": "pnpm@9.1.1",
   "description": "onion",
   "homepage": "https://github.com/zhaozunhong/onion#readme",

@@ -4,6 +4,35 @@
 [![bundle][bundle-src]][bundle-href]
 [![JSDocs][jsdocs-src]][jsdocs-href]
 
+> A simple middleware onion model.
+
+## Usage
+
+```bash
+npm install @zunh/onion
+pnpm install @zunh/onion
+yarn add @zunh/onion
+```
+
+```js
+import Onion from '@zunh/onion';
+
+const onion = new Onion();
+
+onion.use(async (ctx, next) => {
+  console.log('1');
+  await next();
+  console.log('2');
+});
+
+onion.use(async (ctx, next) => {
+  console.log('3');
+  await next();
+  console.log('4');
+});
+
+onion.run();
+```
 
 ## License
 

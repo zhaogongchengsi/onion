@@ -111,4 +111,31 @@ describe('Onion', () => {
 		expect(ctx.count).toBe(1)
 	})
 
+	// 测试执行顺序
+	it('run order', async () => {
+		const onion = new Onion()
+		
+		const order: number[] = []
+
+		onion.use(async (ctx: any, next: () => Promise<void>) => {
+			order.push(1)
+			await next()
+			order.push(5)
+		})
+
+		onion.use(async (ctx: any, next: () => Promise<void>) => {
+			order.push(2)
+			await next()
+			order.push(4)
+		})
+
+		onion.use(async (ctx: any, next: () => Promise<void>) => {
+			order.push(3)
+		})
+
+		await onion.run()
+
+		expect(order).toEqual([1, 2, 3, 4, 5])
+	})
+
 })

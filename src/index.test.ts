@@ -114,7 +114,7 @@ describe('Onion', () => {
 	// 测试执行顺序
 	it('run order', async () => {
 		const onion = new Onion()
-		
+
 		const order: number[] = []
 
 		onion.use(async (ctx: any, next: () => Promise<void>) => {
@@ -136,6 +136,32 @@ describe('Onion', () => {
 		await onion.run()
 
 		expect(order).toEqual([1, 2, 3, 4, 5])
+	})
+
+
+	it('run  before', async () => {
+		// run before middleware 3
+		const onion = new Onion(true, async (ctx: any, i: number) => {
+			ctx.count++
+		})
+		const ctx = { count: 0 }
+
+		onion.use(async (ctx: any, next: () => Promise<void>) => {
+			ctx.count++
+			await next()
+			ctx.count++
+		})
+
+		onion.use(async (ctx: any, next: () => Promise<void>) => {
+			ctx.count++
+		})
+
+		onion.use(async (ctx: any, next: () => Promise<void>) => {
+			ctx.count++
+		})
+
+		await onion.run(ctx)
+		expect(ctx.count).toBe(7)
 	})
 
 })
